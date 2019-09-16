@@ -1,5 +1,5 @@
 *.png
 *.jpg
-.idea/
+/.idea/
 __pycache__/
 *JPG
