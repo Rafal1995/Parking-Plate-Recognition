@@ -1,5 +1,5 @@
 import os
-import cv2
+from cv2 import cv2
 import numpy as np
 import math
 import random
@@ -321,7 +321,6 @@ def recognizeCharsInPlate(imgThresh, listOfMatchingChars, intPlateCounter):
         retval, npaResults, neigh_resp, dists = kNN.findNearest(npaROIResized, k = 1)
 
         strCurrentChar = str(chr(int(npaResults[0][0])))
-
         strChars = strChars + strCurrentChar
 
     if Main.showSteps:

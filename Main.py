@@ -2,6 +2,8 @@ import cv2
 import numpy
 import os
 import requests
+import time
+
 
 #additional python files
 
@@ -17,7 +19,7 @@ showSteps = False
 def main():
     print("Plate Recognition")
 
-    ENDPOINT = 'http://localhost:8080/parking/entry'
+    ENDPOINT = 'http://localhost:8080/entry'
     blnKNNTrainingSuccessful = DetectChars.loadKNNDataAndTrainKNN()
 
     if blnKNNTrainingSuccessful == False:  # if KNN training was not successful
@@ -25,7 +27,7 @@ def main():
         return
 
     #read image file
-    imgOriginal = cv2.imread("tab_4.jpg")
+    imgOriginal = cv2.imread("tab_6.jpg")
 
     #if could not read image print error message. cv2.imread - do not throw error, if read goea wrong img is None
     if imgOriginal is None:
@@ -43,13 +45,16 @@ def main():
         licensePlate = listOfPlates[0]
         print("License plate number: " + licensePlate.strChars)
 
-    data = {"regNum": licensePlate.strChars,
-            "entrId": 1568622685000}
+    miliTime = int(round(time.time() * 1000))
+    print(miliTime)
 
-    r = requests.post(url=ENDPOINT, auth = ('admin', 'admin'), json=data)
+    data = {"regNum": licensePlate.strChars,
+            "entryTime": miliTime}
+
+    r = requests.post(url=ENDPOINT, auth=('app', 'app'), json=data)
 
     print(data)
-    print(r)
+    print(r.status_code)
 
 
 
