@@ -19,6 +19,8 @@ showSteps = False
 def main():
     print("Plate Recognition")
 
+    entry = True
+
     ENDPOINT = 'http://localhost:8080/entry'
     blnKNNTrainingSuccessful = DetectChars.loadKNNDataAndTrainKNN()
 
@@ -48,13 +50,17 @@ def main():
     miliTime = int(round(time.time() * 1000))
     print(miliTime)
 
-    data = {"regNum": licensePlate.strChars,
-            "entryTime": miliTime}
+    if entry:
+        data = {"regNum": licensePlate.strChars,
+                "entryTime": miliTime}
+    else:
+        data = {"regNum": licensePlate.strChars,
+                "exitTime": miliTime}
 
     r = requests.post(url=ENDPOINT, auth=('app', 'app'), json=data)
 
     print(data)
-    print(r.status_code)
+    print(r.content)
 
 
 
