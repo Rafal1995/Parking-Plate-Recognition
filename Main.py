@@ -21,7 +21,8 @@ def main():
 
     entry = True
 
-    ENDPOINT = 'http://localhost:8080/entry'
+    ENDPOINT_ENTRY = 'http://localhost:8080/entry'
+    ENDPOINT_EXIT = 'http://localhost:8080/exit'
     blnKNNTrainingSuccessful = DetectChars.loadKNNDataAndTrainKNN()
 
     if blnKNNTrainingSuccessful == False:  # if KNN training was not successful
@@ -29,7 +30,7 @@ def main():
         return
 
     #read image file
-    imgOriginal = cv2.imread("tab_6.jpg")
+    imgOriginal = cv2.imread("tab_7.jpg")
 
     #if could not read image print error message. cv2.imread - do not throw error, if read goea wrong img is None
     if imgOriginal is None:
@@ -53,18 +54,16 @@ def main():
     if entry:
         data = {"regNum": licensePlate.strChars,
                 "entryTime": miliTime}
+        r = requests.post(url=ENDPOINT_ENTRY, auth=('app', 'app'), json=data)
     else:
         data = {"regNum": licensePlate.strChars,
                 "exitTime": miliTime}
+        r = requests.post(url=ENDPOINT_EXIT, auth=('app', 'app'), json=data)
 
-    r = requests.post(url=ENDPOINT, auth=('app', 'app'), json=data)
+
 
     print(data)
     print(r.content)
-
-
-
-    cv2.waitKey(0)
 
     return
 
