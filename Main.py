@@ -1,4 +1,4 @@
-import cv2
+from cv2 import cv2
 import numpy
 import os
 import requests
@@ -13,7 +13,7 @@ import DetectPlates
 
 
 ##########################
-showSteps = False
+showSteps = True
 
 
 def main():
@@ -30,7 +30,7 @@ def main():
         return
 
     #read image file
-    imgOriginal = cv2.imread("tab_7.jpg")
+    imgOriginal = cv2.imread("tab_10.jpg")
 
     #if could not read image print error message. cv2.imread - do not throw error, if read goea wrong img is None
     if imgOriginal is None:
@@ -50,21 +50,19 @@ def main():
 
     miliTime = int(round(time.time() * 1000))
     print(miliTime)
+    if not showSteps:
+        if entry:
+            data = {"regNum": licensePlate.strChars,
+                    "entryTime": miliTime}
+            r = requests.post(url=ENDPOINT_ENTRY, auth=('app', 'app'), json=data)
+        else:
+            data = {"regNum": licensePlate.strChars,
+                    "exitTime": miliTime}
+            r = requests.post(url=ENDPOINT_EXIT, auth=('app', 'app'), json=data)
+        print(data)
+        print(r.content)
 
-    if entry:
-        data = {"regNum": licensePlate.strChars,
-                "entryTime": miliTime}
-        r = requests.post(url=ENDPOINT_ENTRY, auth=('app', 'app'), json=data)
-    else:
-        data = {"regNum": licensePlate.strChars,
-                "exitTime": miliTime}
-        r = requests.post(url=ENDPOINT_EXIT, auth=('app', 'app'), json=data)
-
-
-
-    print(data)
-    print(r.content)
-
+    cv2.waitKey(100)
     return
 
 

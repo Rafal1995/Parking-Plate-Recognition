@@ -1,4 +1,4 @@
-import cv2
+from cv2 import cv2
 import numpy as np
 import math
 import Main
@@ -90,6 +90,7 @@ def findPossibleCharsInScene(imgThresh):
 
     if Main.showSteps:
         cv2.drawContours(imgAllContours, contours, -1, (255.0, 255.0, 255.0))
+        cv2.imshow("ALL CONTOURS", imgAllContours)
 
     for i in range(0, len(contours)):
 

@@ -14,7 +14,7 @@ def preprocess(imgOriginal):
 
     imgBlurred = cv2.GaussianBlur(imgGreyScaleMaxContrast, (5, 5), cv2.BORDER_DEFAULT)
 
-    ret, imgThresh = cv2.threshold(imgBlurred, 90, 255, cv2.THRESH_BINARY_INV)
+    ret, imgThresh = cv2.threshold(imgBlurred, 127, 255, cv2.THRESH_BINARY_INV)
 
     # imgThresh = cv2.adaptiveThreshold(imgBlurred, 255.0, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 11, 9)
     return imgGreyScale, imgThresh
@@ -29,9 +29,9 @@ def preprocessPlate(imgOriginal):
 
     imgBlurred = np.zeros((heigth, width, 1), np.uint8)
 
-    imgBlurred = cv2.GaussianBlur(imgGreyScaleMaxContrast, (5, 5), 0)
+    imgBlurred = cv2.GaussianBlur(imgGreyScaleMaxContrast, (5, 5), cv2.BORDER_DEFAULT)
 
-    ret, imgThresh = cv2.threshold(imgGreyScale, 90, 255, cv2.THRESH_BINARY_INV)
+    ret, imgThresh = cv2.threshold(imgGreyScale, 127, 255, cv2.THRESH_BINARY_INV)
 
     # imgThresh = cv2.adaptiveThreshold(imgBlurred, 255.0, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 15, 9)
     return imgGreyScale, imgThresh
